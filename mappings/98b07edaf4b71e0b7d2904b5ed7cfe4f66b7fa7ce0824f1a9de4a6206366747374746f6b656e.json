@@ -1,15 +1,5 @@
 {
     "policy": "82008200581c3ea81b7d7873456091b2b0be057020787d921447669bfd5750191462",
-    "name": {
-        "signatures": [
-            {
-                "publicKey": "0e2b873a7b39482072e5c78f7ae2797b6ca4a52546d2f64b4371019a899907e5",
-                "signature": "ca26c0223e37ead890d34185ed04fca3648bf78bb2d91ef4c637faf60c9ed7949b202f591b46aa726a0c8f7208b997518140fa495f7a23710950052fff18d30e"
-            }
-        ],
-        "sequenceNumber": 0,
-        "value": "cftsttoken"
-    },
     "description": {
         "signatures": [
             {
