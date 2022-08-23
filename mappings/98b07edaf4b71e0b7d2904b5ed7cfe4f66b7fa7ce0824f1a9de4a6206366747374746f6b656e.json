@@ -1,0 +1,44 @@
+{
+    "policy": "82008200581c3ea81b7d7873456091b2b0be057020787d921447669bfd5750191462",
+    "name": {
+        "signatures": [
+            {
+                "publicKey": "0e2b873a7b39482072e5c78f7ae2797b6ca4a52546d2f64b4371019a899907e5",
+                "signature": "ca26c0223e37ead890d34185ed04fca3648bf78bb2d91ef4c637faf60c9ed7949b202f591b46aa726a0c8f7208b997518140fa495f7a23710950052fff18d30e"
+            }
+        ],
+        "sequenceNumber": 0,
+        "value": "cftsttoken"
+    },
+    "description": {
+        "signatures": [
+            {
+                "publicKey": "0e2b873a7b39482072e5c78f7ae2797b6ca4a52546d2f64b4371019a899907e5",
+                "signature": "a8735681da96f354017afed2bdc9e9b5ee9aa9d9a2f9bc419d5ab2b4826779c88c889d48bbc0bebc0126b1618f62f1a804568a692aa613842fb6cd105e53260c"
+            }
+        ],
+        "sequenceNumber": 0,
+        "value": "just for testing"
+    },
+    "ticker": {
+        "signatures": [
+            {
+                "publicKey": "0e2b873a7b39482072e5c78f7ae2797b6ca4a52546d2f64b4371019a899907e5",
+                "signature": "47e59d8ab35fd458a672d32df3a67e807c1179798165e2b9511b162b3eff0e95a2d2fae42898f79705079d5daaadb13eade190616108f6a9f8cb99ff5db3e209"
+            }
+        ],
+        "sequenceNumber": 0,
+        "value": "cftst"
+    },
+    "subject": "98b07edaf4b71e0b7d2904b5ed7cfe4f66b7fa7ce0824f1a9de4a6206366747374746f6b656e",
+    "decimals": {
+        "signatures": [
+            {
+                "publicKey": "0e2b873a7b39482072e5c78f7ae2797b6ca4a52546d2f64b4371019a899907e5",
+                "signature": "e558f1d440c1ca0ef3c0e53a6a1502b242a9e5f696a99aed9388b1cc2ca2d2b8f3b02705bf7776c7f1aab6d2f1a5e33834e12d78b18ac349ce3b41fca998350e"
+            }
+        ],
+        "sequenceNumber": 0,
+        "value": 0
+    }
+}
