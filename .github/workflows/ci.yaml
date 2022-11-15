@@ -114,7 +114,7 @@ jobs:
             echo "Validating if files are in LedgerX token list:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, RLENGTH-14 )}' \
-                | xargs -I{} bash -c 'if grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "WARNING subject on Ledger Top 100: mappings/{}.json"; ::warning file=mappings/{}.json::Metadata is part of LedgerX Top 100 token list; else echo "mappings/{}.json not on LedgerX token list; fi'
+                | xargs -I{} bash -c 'if grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "WARNING subject on Ledger Top 100: mappings/{}.json"; ::warning file=mappings/{}.json::Metadata is part of LedgerX Top 100 token list; else echo "mappings/{}.json not on LedgerX token list"; fi'
             echo
 
       - name: Has been minted check
