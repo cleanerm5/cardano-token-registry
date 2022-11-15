@@ -116,12 +116,14 @@ jobs:
             echo "Validating if files are in LedgerX token list:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, RLENGTH-14 )}' \
-                | xargs -I{} bash -c 'if ! grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "::warning file=mappings/{}.json::Metadata mappings/{}.json is part of LedgerX Top 100 token list"; echo "status=failure" >> $GITHUB_OUTPUT; else echo "mappings/{}.json not on LedgerX token list"; echo "status=success" >> $GITHUB_OUTPUT; fi'
+                | xargs -I{} bash -c 'if grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "::warning file=mappings/{}.json::Metadata mappings/{}.json is part of LedgerX Top 100 token list"; echo "status=failure" >> $GITHUB_OUTPUT; else echo "mappings/{}.json not on LedgerX token list"; echo "status=success" >> $GITHUB_OUTPUT; fi'
             echo
 
       - name: Has been minted check
         id: ismainnetassetcheck
         continue-on-error: true
+        env:
+          BLOCKFROST_PROJECT_ID: ${{ secrets.BLOCKFROST_PROJECT_ID }}
         run: |
             echo All good
             echo "status=success" >> $GITHUB_OUTPUT
@@ -129,6 +131,27 @@ jobs:
             # if it is smart contract based and policyid is not avail...ignore it
             # call blockfrost to check if that asset already exists
             # output a warning on this step if it does not exist
+            export BASE="master"
+            export LOCATION="mappings"
+
+            pushd pull-request
+            echo "Fetching base branch '${BASE}':"
+            git fetch origin ${BASE} --depth=1
+            echo
+
+            echo "Obtaining PR file change diff:"
+            echo "BASE: ${BASE}"
+            echo
+            git --no-pager diff --name-status origin/"${BASE}" HEAD > "HEAD.diff"
+            cat "HEAD.diff"
+            echo
+
+            rm -f fail-location fail-filename || :
+            echo "Validating if files are in LedgerX token list:"
+            echo
+            awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, 56 )}' \
+                | xargs -I{} bash -c 'curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}'
+            echo
             
       - name: Check optional validation outcome
         if: steps.ledgerxcheck.outputs.status == 'failure' || steps.ismainnetassetcheck.outputs.status == 'failure'
