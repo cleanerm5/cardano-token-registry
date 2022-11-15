@@ -91,6 +91,7 @@ jobs:
           echo
 
       - name: Ledger Top100 cross check
+        id: ledgerxcheck
         continue-on-error: true
         run: |
             # run over every file in the diff
@@ -115,14 +116,20 @@ jobs:
             echo "Validating if files are in LedgerX token list:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, RLENGTH-14 )}' \
-                | xargs -I{} bash -c 'if ! grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "WARNING subject on Ledger Top 100: mappings/{}.json"; echo "::warning file=mappings/{}.json::Metadata is part of LedgerX Top 100 token list"; else echo "mappings/{}.json not on LedgerX token list"; fi'
+                | xargs -I{} bash -c 'if ! grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "WARNING subject on Ledger Top 100: mappings/{}.json"; echo "::warning file=mappings/{}.json::Metadata is part of LedgerX Top 100 token list"; echo "::set-output name=status::failure"; else echo "mappings/{}.json not on LedgerX token list"; echo "::set-output name=status::success"; fi'
             echo
 
       - name: Has been minted check
+        id: ismainnetassetcheck
         continue-on-error: true
         run: |
             echo All good
+            echo "::set-output name=status::success"
             # Get the policyid from the file (or determine the asset id)
             # if it is smart contract based and policyid is not avail...ignore it
             # call blockfrost to check if that asset already exists
             # output a warning on this step if it does not exist
+            
+      - name: Check optional validation outcome
+        if: steps.ledgerxcheck.outputs.status == 'failure' || steps.ismainnetassetcheck.outputs.status == 'failure'
+        run: exit 1
