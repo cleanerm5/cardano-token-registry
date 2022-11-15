@@ -150,7 +150,7 @@ jobs:
             echo "Validating if files are in LedgerX token list:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, 56 )}' \
-                | xargs -I{} bash -c 'curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}'
+                | xargs -I{} bash -c 'STATUS_CODE=$(curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}); if [ "$STATUS_CODE" != "200" ]; then echo "status=failure" >> $GITHUB_OUTPUT; else echo "status=success" >> $GITHUB_OUTPUT;'
             echo
             
       - name: Check optional validation outcome
