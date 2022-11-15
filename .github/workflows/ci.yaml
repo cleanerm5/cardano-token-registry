@@ -116,7 +116,7 @@ jobs:
             echo "Validating if files are in LedgerX token list:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, RLENGTH-14 )}' \
-                | xargs -I{} bash -c 'if grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "::warning file=mappings/{}.json::Metadata mappings/{}.json is part of LedgerX Top 100 token list"; echo "status=failure" >> $GITHUB_OUTPUT; else echo "mappings/{}.json not on LedgerX token list"; echo "status=success" >> $GITHUB_OUTPUT; fi'
+                | xargs -I{} bash -c 'if grep -q "{}" "../ledger/tokenRegistry/top100JsonList_ep321-337.json"; then echo "::warning file=mappings/{}.json::Subject {} is part of LedgerX Top 100 token list"; echo "status=failure" >> $GITHUB_OUTPUT; else echo "Subject {} not on LedgerX token list"; echo "status=success" >> $GITHUB_OUTPUT; fi'
             echo
 
       - name: Has been minted check
@@ -147,10 +147,10 @@ jobs:
             echo
 
             rm -f fail-location fail-filename || :
-            echo "Validating if files are in LedgerX token list:"
+            echo "Validating if asset has been minted on mainnet already:"
             echo
             awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, 56 )}' \
-                | xargs -I{} bash -c 'STATUS_CODE=$(curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}); if [ "$STATUS_CODE" != "200" ]; then echo "status=failure" >> $GITHUB_OUTPUT; else echo "status=success" >> $GITHUB_OUTPUT;'
+                | xargs -I{} bash -c 'STATUS_CODE=$(curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}); if "$STATUS_CODE" != "200"; then echo "status=failure" >> $GITHUB_OUTPUT; else echo "status=success" >> $GITHUB_OUTPUT;'
             echo
             
       - name: Check optional validation outcome
