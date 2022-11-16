@@ -149,8 +149,9 @@ jobs:
             rm -f fail-location fail-filename || :
             echo "Validating if asset has been minted on mainnet already:"
             echo
-            awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, 56 )}' \
-                | xargs -I{} bash -c 'STATUS_CODE=$(curl --write-out '%{http_code}' --silent -H "project_id: ${BLOCKFROST_PROJECT_ID}" --output /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/{}); if "$STATUS_CODE" != "200"; then echo "status=failure" >> $GITHUB_OUTPUT; else echo "status=success" >> $GITHUB_OUTPUT;'
+            awk '{print $2}' "HEAD.diff" | sort | awk 'match($0, /mappings\/[0-9a-f]+\.json/) { print substr( $0, RSTART+9, RLENGTH-14 )}' \
+              | while read policy; do echo "Checking subject ${policy} with policy id ${policy:0:56}"; if [ $(curl -w '%{http_code}' -s -H "project_id: ${BLOCKFROST_PROJECT_ID}" -q -o /dev/null https://cardano-mainnet.blockfrost.io/api/v0/assets/policy/${policy:0:56}) = "200" ]; \
+              then echo "status=success" >> $GITHUB_OUTPUT; else echo "::warning file=mappings/${policy}.json::No assets with policy id ${policy:0:56} have ever been minted on mainnet."; echo "status=failure" >> $GITHUB_OUTPUT; fi; done
             echo
             
       - name: Check optional validation outcome
