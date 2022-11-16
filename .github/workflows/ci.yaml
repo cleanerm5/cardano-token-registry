@@ -27,6 +27,9 @@ jobs:
           path: ledger
 
       - name: Validate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
         run: |
           # shellcheck disable=SC2016
           # Debug:
@@ -39,6 +42,10 @@ jobs:
           echo "Fetching base branch '${BASE}':"
           git fetch origin ${BASE} --depth=1
           echo
+          
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            /repos/cardano-foundation/cardano-token-registry/pulls/${PR}/files
 
           echo "Obtaining PR file change diff:"
           echo "BASE: ${BASE}"
