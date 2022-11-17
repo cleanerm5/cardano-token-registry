@@ -100,6 +100,9 @@ jobs:
 
       - name: Ledger Top100 cross check
         id: ledgerxcheck
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
         continue-on-error: true
         run: |
             # run over every file in the diff
@@ -136,6 +139,8 @@ jobs:
         continue-on-error: true
         env:
           BLOCKFROST_PROJECT_ID: ${{ secrets.BLOCKFROST_PROJECT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
         run: |
             echo All good
             echo "status=success" >> $GITHUB_OUTPUT
