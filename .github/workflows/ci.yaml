@@ -115,9 +115,13 @@ jobs:
 
             echo "Obtaining PR file change diff:"
             echo "BASE: ${BASE}"
-            echo
-            git --no-pager diff --name-status origin/"${BASE}" HEAD > "HEAD.diff"
-            cat "HEAD.diff"
+            echo          
+            # git --no-pager diff --name-status origin/"${BASE}" HEAD > "HEAD.diff"
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              /repos/cleanerm5/cardano-token-registry/pulls/${PR}/files \
+              | jq --raw-output -c '.[] | [.status, .filename] | @csv' | sed $'s/,/\t/g; s/\"//g; s/added/A/g; s/modified/M/g; s/removed/D/g; s/renamed/R/g; s/copied/C/g; s/changed/T/g; s/unchanged/U/g' \
+              > "HEAD.diff"
             echo
 
             rm -f fail-location fail-filename || :
@@ -149,9 +153,13 @@ jobs:
 
             echo "Obtaining PR file change diff:"
             echo "BASE: ${BASE}"
-            echo
-            git --no-pager diff --name-status origin/"${BASE}" HEAD > "HEAD.diff"
-            cat "HEAD.diff"
+            echo          
+            # git --no-pager diff --name-status origin/"${BASE}" HEAD > "HEAD.diff"
+            gh api \
+              -H "Accept: application/vnd.github+json" \
+              /repos/cleanerm5/cardano-token-registry/pulls/${PR}/files \
+              | jq --raw-output -c '.[] | [.status, .filename] | @csv' | sed $'s/,/\t/g; s/\"//g; s/added/A/g; s/modified/M/g; s/removed/D/g; s/renamed/R/g; s/copied/C/g; s/changed/T/g; s/unchanged/U/g' \
+              > "HEAD.diff"
             echo
 
             rm -f fail-location fail-filename || :
