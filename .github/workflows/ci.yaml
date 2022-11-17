@@ -45,7 +45,8 @@ jobs:
           
           gh api \
             -H "Accept: application/vnd.github+json" \
-            /repos/cardano-foundation/cardano-token-registry/pulls/${PR}/files
+            /repos/cleanerm5/cardano-token-registry/pulls/${PR}/files \
+            | jq --raw-output -c '.[] | [.status, .filename] | @csv' | sed $'s/,/\t/g; s/\"//g; s/added/A/g; s/modified/M/g; s/removed/D/g; s/renamed/R/g; s/copied/C/g; s/changed/T/g; s/unchanged/U/g'
 
           echo "Obtaining PR file change diff:"
           echo "BASE: ${BASE}"
