@@ -15,15 +15,11 @@
         ]
     },
     "name": {
-        "sequenceNumber": 0,
-        "value": "CNC Token",
+        "sequenceNumber": 1,
+        "value": "VOID",
         "signatures": [
             {
-                "signature": "df26caaf446739d139468354689b2cc9de1a0ac5eb5cba78416e16a4431310bf343781e3c12a836843cae769f21234a8e650948ac0ef7de8085a4b29ea5a8a07",
-                "publicKey": "9a2ca08efcc2f75898afdfd3c6e83a973649b3df087c44a3aeae3b81d80a4e80"
-            },
-            {
-                "signature": "df26caaf446739d139468354689b2cc9de1a0ac5eb5cba78416e16a4431310bf343781e3c12a836843cae769f21234a8e650948ac0ef7de8085a4b29ea5a8a07",
+                "signature": "6563cdbe263c8bca697387d992ce1a1eab60ac401b74ff746eb99f3c7f6b500a5a2bb01381f0e8a96574cd4be0be768c3a053f2dbfd0f8aeab2a5c90ad47ef03",
                 "publicKey": "9a2ca08efcc2f75898afdfd3c6e83a973649b3df087c44a3aeae3b81d80a4e80"
             }
         ]
@@ -72,15 +68,11 @@
         ]
     },
     "description": {
-        "sequenceNumber": 0,
-        "value": "Climate Neutral Cardano is a Community Group of climate-neutral Cardano stake pools",
+        "sequenceNumber": 1,
+        "value": "VOID",
         "signatures": [
             {
-                "signature": "170be90fc27286e25d8b3cd52427761d0b21b7a4ca60181a48f2546699ede4c6a4c710185178f9c1d701814021eab9905246716f3feae4a010536ba4b1b1af00",
-                "publicKey": "9a2ca08efcc2f75898afdfd3c6e83a973649b3df087c44a3aeae3b81d80a4e80"
-            },
-            {
-                "signature": "170be90fc27286e25d8b3cd52427761d0b21b7a4ca60181a48f2546699ede4c6a4c710185178f9c1d701814021eab9905246716f3feae4a010536ba4b1b1af00",
+                "signature": "94bf5f5e71622f9699ff58a5e6e912077f6eefed901d7baca218a206635304fd0231a9a5c4a1fe23b63ec4c408198abc0b7c1e0982d585657438cfc622a2e00d",
                 "publicKey": "9a2ca08efcc2f75898afdfd3c6e83a973649b3df087c44a3aeae3b81d80a4e80"
             }
         ]
